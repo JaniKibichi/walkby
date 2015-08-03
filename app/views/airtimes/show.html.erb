@@ -1,0 +1,27 @@
+<p>
+  <strong>Status:</strong>
+  <%= @airtime.status %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @airtime.amount %>
+</p>
+
+<p>
+  <strong>Phonenumber:</strong>
+  <%= @airtime.phoneNumber %>
+</p>
+
+<p>
+  <strong>Discount:</strong>
+  <%= @airtime.discount %>
+</p>
+
+<p>
+  <strong>Requestid:</strong>
+  <%= @airtime.requestId %>
+</p>
+
+<%= link_to 'Edit', edit_airtime_path(@airtime) %> |
+<%= link_to 'Back', airtimes_path %>

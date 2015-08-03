@@ -1,0 +1,32 @@
+<p>
+  <strong>From:</strong>
+  <%= @keyword.from %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @keyword.to %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @keyword.text %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @keyword.date %>
+</p>
+
+<p>
+  <strong>Smsid:</strong>
+  <%= @keyword.smsId %>
+</p>
+
+<p>
+  <strong>Linkid:</strong>
+  <%= @keyword.linkId %>
+</p>
+
+<%= link_to 'Edit', edit_keyword_path(@keyword) %> |
+<%= link_to 'Back', keywords_path %>

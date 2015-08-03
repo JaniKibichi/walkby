@@ -1,0 +1,97 @@
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>How to Send an SMS</h3>
+      </div>
+
+ <div class="panel-body">
+  <h4>Fill the fields:</h4>
+   <div>
+   <a href="https://account.africastalking.com/settings/addphone">Number: </a>The receiver (verify your number for free credits)<br/>
+   <br/>
+<a href="https://account.africastalking.com/sms/keywords">Message: </a>The Message you are sending </br>
+<br/>
+Username: Your username on the API<br/>
+<br/>
+<a href="https://account.africastalking.com/settings/apikey">APIKey: </a>Use an API Key you Generate for your account.<br/>
+<hr/>
+<p> To send using the free credits, <a href="https://account.africastalking.com/settings/addphone">VERIFY</a> your number.</p>
+   </div>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Send SMS</h3>
+      </div>
+<%= render 'form' %>
+
+      </div>
+    </div>
+</div>
+</div>
+
+<div class="row">
+ <div class="col-md-8 center">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>The Code</h3>
+      </div>
+
+  <div class="panel-body">
+  <code>
+       # Include the helper gateway class <br/>
+    require_relative 'AfricasTalkingGateway'<br/>
+<br/>
+    # Specify your login credentials<br/>
+      # Specify your login credentials<br/>
+    user = params.require(:subscribe).permit(:username)<br/>
+    username = user['username']<br/>
+<br/>
+    api =params.require(:subscribe).permit(:apikey)<br/>
+    apikey = api['apikey']<br/>
+<br/>
+    # Specify the numbers that you want to send to in a comma-separated list<br/>
+    # Please ensure you include the country code (+254 for Kenya in this case)<br/>
+    to      = params.require(:bulk).permit(:number)<br/>
+    tof = to[:number]<br/>
+<br/>
+    # And of course we want our recipients to know what we really do<br/>
+    message = params.require(:bulk).permit(:message)<br/>
+    msg = message[:message]<br/>
+<br/>
+    # Create a new instance of our awesome gateway class<br/>
+    gateway = AfricasTalkingGateway.new(username, apikey)<br/>
+<br/>
+    # Any gateway error will be captured by our custom Exception class below,<br/>
+    # so wrap the call in a try-catch block<br/>
+    begin<br/>
+      # Thats it, hit send and we'll take care of the rest.<br/>
+      reports = gateway.sendMessage(tof,msg)<br/>
+      reports.each {|x|<br/>
+        @bulk = Bulk.new(number: x.number, status: x.status, <br/>message_id: x.messageId, cost: x.cost, message: params[:message] )<br/>
+      }<br/>
+      respond_to do |format|<br/>
+        if @bulk.save<br/>
+          format.html { redirect_to @bulk, notice: 'Bulk sms was successfully created.' }<br/>
+          format.json { render :show, status: :created, location: @bulk }<br/>
+        else<br/>
+          format.html { render :new }<br/>
+          format.json { render json: @bulk.errors, status: :unprocessable_entity }<br/>
+        end<br/>
+      end<br/>
+
+    rescue AfricasTalkingGatewayException => ex<br/>
+      puts 'Encountered an error: ' + ex.message<br/>
+    end<br/>
+    end<br/>
+<br/>
+  </code>
+  </div>
+  </div>
+ </div>
+</div>

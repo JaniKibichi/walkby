@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Isactive:</strong>
+  <%= @pickcall.isActive %>
+</p>
+
+<p>
+  <strong>Sessionid:</strong>
+  <%= @pickcall.sessionId %>
+</p>
+
+<p>
+  <strong>Direction:</strong>
+  <%= @pickcall.direction %>
+</p>
+
+<p>
+  <strong>Callernumber:</strong>
+  <%= @pickcall.callerNumber %>
+</p>
+
+<p>
+  <strong>Destinationnumber:</strong>
+  <%= @pickcall.destinationNumber %>
+</p>
+
+<p>
+  <strong>Dtmfdigits:</strong>
+  <%= @pickcall.dtmfDigits %>
+</p>
+
+<p>
+  <strong>Recordingurl:</strong>
+  <%= @pickcall.recordingUrl %>
+</p>
+
+<p>
+  <strong>Durationinseconds:</strong>
+  <%= @pickcall.durationInSeconds %>
+</p>
+
+<p>
+  <strong>Currencycode:</strong>
+  <%= @pickcall.currencyCode %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @pickcall.amount %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @pickcall.username %>
+</p>
+
+<p>
+  <strong>Apikey:</strong>
+  <%= @pickcall.apikey %>
+</p>
+
+<%= link_to 'Edit', edit_pickcall_path(@pickcall) %> |
+<%= link_to 'Back', pickcalls_path %>

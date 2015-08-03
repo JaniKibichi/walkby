@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Isactive:</strong>
+  <%= @dequeue.isActive %>
+</p>
+
+<p>
+  <strong>Sessionid:</strong>
+  <%= @dequeue.sessionId %>
+</p>
+
+<p>
+  <strong>Direction:</strong>
+  <%= @dequeue.direction %>
+</p>
+
+<p>
+  <strong>Callernumber:</strong>
+  <%= @dequeue.callerNumber %>
+</p>
+
+<p>
+  <strong>Destinationnumber:</strong>
+  <%= @dequeue.destinationNumber %>
+</p>
+
+<p>
+  <strong>Dtmfdigits:</strong>
+  <%= @dequeue.dtmfDigits %>
+</p>
+
+<p>
+  <strong>Recordingurl:</strong>
+  <%= @dequeue.recordingUrl %>
+</p>
+
+<p>
+  <strong>Durationinseconds:</strong>
+  <%= @dequeue.durationInSeconds %>
+</p>
+
+<p>
+  <strong>Currencycode:</strong>
+  <%= @dequeue.currencyCode %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @dequeue.amount %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @dequeue.username %>
+</p>
+
+<p>
+  <strong>Apikey:</strong>
+  <%= @dequeue.apikey %>
+</p>
+
+<%= link_to 'Edit', edit_dequeue_path(@dequeue) %> |
+<%= link_to 'Back', dequeues_path %>

@@ -1,0 +1,34 @@
+<div class="panel-body">
+<%= form_for(@ussd, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @ussd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ussd.errors.count, "error") %> prohibited this ussd from being saved:</h2>
+
+      <ul>
+      <% @ussd.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= f.label :ChangeOption1, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :body, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="field form-group">
+    <%= f.label :ChangeOption2, class: 'col-sm-4 control-label' %>
+   <div class="col-sm-8">
+    <%= f.text_field :body2, class: 'form-control' %>
+   </div>
+  </div>
+
+  <div class="actions form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    <%= f.submit "Change USSD" %>
+    </div>
+  </div>
+<% end %>
+</div>

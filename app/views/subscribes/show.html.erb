@@ -1,0 +1,12 @@
+<p>
+  <strong>Status:</strong>
+  <%= @subscribe.status %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @subscribe.description %>
+</p>
+
+<%= link_to 'Edit', edit_subscribe_path(@subscribe) %> |
+<%= link_to 'Back', subscribes_path %>

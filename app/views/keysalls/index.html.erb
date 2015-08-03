@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List of Received SMS Starting With Keyword</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+        <td><%= 'From' %></td>
+        <td><%= 'To' %></td>
+        <td><%= 'Text' %></td>
+        <td><%= 'Date' %></td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @keysalls.each do |keysall| %>
+      <tr>
+        <td><%= keysall.from %></td>
+        <td><%= keysall.to %></td>
+        <td><%= keysall.text %></td>
+        <td><%= keysall.date %></td>
+        <td><%= link_to 'Show', keysall %></td>
+        <td><%= link_to 'Edit', edit_keysall_path(keysall) %></td>
+        <td><%= link_to 'Destroy', keysall, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Keysall', new_keysall_path %>

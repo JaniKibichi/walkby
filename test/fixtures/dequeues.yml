@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  isActive: 1
+  sessionId: MyString
+  direction: MyString
+  callerNumber: MyString
+  destinationNumber: MyString
+  dtmfDigits: MyString
+  recordingUrl: MyString
+  durationInSeconds: MyString
+  currencyCode: MyString
+  amount: 2015-07-30 09:15:32
+  username: MyString
+  apikey: MyString
+
+two:
+  isActive: 1
+  sessionId: MyString
+  direction: MyString
+  callerNumber: MyString
+  destinationNumber: MyString
+  dtmfDigits: MyString
+  recordingUrl: MyString
+  durationInSeconds: MyString
+  currencyCode: MyString
+  amount: 2015-07-30 09:15:32
+  username: MyString
+  apikey: MyString

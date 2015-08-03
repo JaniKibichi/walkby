@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Dtmf2s</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Isactive</th>
+      <th>Sessionid</th>
+      <th>Direction</th>
+      <th>Callernumber</th>
+      <th>Destinationnumber</th>
+      <th>Dtmfdigits</th>
+      <th>Recordingurl</th>
+      <th>Durationinseconds</th>
+      <th>Currencycode</th>
+      <th>Amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dtmf2s.each do |dtmf2| %>
+      <tr>
+        <td><%= dtmf2.isActive %></td>
+        <td><%= dtmf2.sessionId %></td>
+        <td><%= dtmf2.direction %></td>
+        <td><%= dtmf2.callerNumber %></td>
+        <td><%= dtmf2.destinationNumber %></td>
+        <td><%= dtmf2.dtmfDigits %></td>
+        <td><%= dtmf2.recordingUrl %></td>
+        <td><%= dtmf2.durationInSeconds %></td>
+        <td><%= dtmf2.currencyCode %></td>
+        <td><%= dtmf2.amount %></td>
+        <td><%= link_to 'Show', dtmf2 %></td>
+        <td><%= link_to 'Edit', edit_dtmf2_path(dtmf2) %></td>
+        <td><%= link_to 'Destroy', dtmf2, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dtmf2', new_dtmf2_path %>

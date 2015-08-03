@@ -1,0 +1,112 @@
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Call Interactive Voice Response</h3>
+      </div>
+
+ <div class="panel-body">
+  <h4>Call This Number:</h4>
+   <p>+254711082301, open for ALL Networks(standard rates).</p>
+   <br/>
+   <a href="https://account.africastalking.com/voice/request">You can REQUEST a Virtual Number.</a><br/>
+   <hr/>
+   <p> When you call +254711082301, you should hear the IVR Menu.</p>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Dial</h3>
+      </div>
+<br/>
+<br/>
+
+      <div class="well">
+         <h1>Dial +254711082301 </h1>
+         <%= link_to 'See all Calls', dtmfs_path, class: 'btn btn-success' %><br/>
+      </div>
+
+      </div>
+    </div>
+
+</div>
+</div>
+
+<div class="row">
+ <div class="col-md-8 center">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>The Code</h3>
+      </div>
+
+  <div class="panel-body">
+  <code>
+    #Receive Incoming Calls <br/>
+    #First read in a couple of POST variables passed in with the request  <br/>
+    @dtmf = Dtmf.new(sessionId: params[:sessionId], isActive: params[:isActive],<br/> callerNumber: params[:callerNumber])<br/>
+    @response = Response.new<br/>
+<br/>
+   if @dtmf.save<br/>
+      # redirect_to call_path, :notice => "Your call session was saved"<br/>
+      # Reads the variables sent via POST from our gateway<br/>
+                sessionId = @dtmf.sessionId<br/>
+                isActive = @dtmf.isActive<br/>
+                callerNumber = @dtmf.callerNumber<br/>
+   end<br/>
+<br/>
+   #For this example, we will assume that you persist the call state <br/>
+   #The state goes from: None => PromptSent => Done<br/>
+    currentCallState = 'None'<br/>
+    session[:currentCallState] = currentCallState<br/>
+<br/>
+   if isActive == 1<br/>
+    #The call is active<br/>
+     if  currentCallState == 'None'<br/>
+      # This is the First request we are receiving. Prompt for number<br/>
+      # Compose the response<br/>
+      response  = '<?xml version="1.0" encoding="UTF-8"?>'<br/>
+      response += '<Response>'<br/>
+      response += '<GetDigits timeout="30" finishOnKey="#" <br/>callbackUrl="http://5.175.146.43/dtmf2s">';<br/>
+      response += '<Say>Thank you for calling. Please press 0 followed by the <br/>hash sign to talk to sales, 1 followed by the hash sign to talk to support or 2 followed by <br/>the hash sign to hear this message again.</Say>';<br/>
+      response += '</GetDigits>';<br/>
+      response += '<Say>Thank you for calling. Good bye!</Say>';<br/>
+      response += '</Response>';<br/>
+<br/>
+      @response.now = response<br/>
+<br/>
+      # Print the response onto the page so that our gateway can read it<br/>
+      #header('Content-type: text/plain');<br/>
+      render plain: @response.now<br/>
+      puts "Content-Type: text/plain"<br/>
+      puts @response.now<br/>
+<br/>
+      # DONE!!!<br/>
+      #Be sure to change the call state<br/>
+      session[:currentCallState] = 'PromptSent'<br/>
+     else<br/>
+      @dtmf = Dtmf.new(durationInSeconds: params[:durationInSeconds],<br/> currencyCode: params[:currencyCode], amount: params[:amount])<br/>
+      @dtmf.save<br/>
+       respond_to do |format|<br/>
+         if @dtmf.save<br/>
+           format.html { redirect_to @dtmf, notice: 'Dtmf was successfully created.' }<br/>
+           format.json { render :show, status: :created, location: @dtmf }<br/>
+         else<br/>
+           format.html { render :new }<br/>
+           format.json { render json: @dtmf.errors, status: :unprocessable_entity }<br/>
+         end<br/>
+       end<br/>
+     end<br/>
+   end<br/>
+<br/>
+  </code>
+  </div>
+
+  </div>
+ </div>
+</div>
+
+

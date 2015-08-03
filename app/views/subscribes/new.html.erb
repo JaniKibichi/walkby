@@ -1,0 +1,96 @@
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>How to create a Subscription</h3>
+      </div>
+
+ <div class="panel-body">
+  <h4>Fill the fields:</h4>
+   <div> 
+       <a href="https://account.africastalking.com/sms/shortcodes">ShortCodes: </a>Your shortcode from Africa's Talking<br/> 
+<br/>
+<a href="https://account.africastalking.com/sms/keywords">Keyword: </a>Fill in the Billing Keyword. For shared keywords, the short code could be 20880 or 20414 <br/>
+<br/>
+Username: Your username on the API<br/>
+<br/>
+<a href="https://account.africastalking.com/settings/apikey">APIKey: </a>Use an API Key you Generate for your account.<br/>
+<hr/>
+<p> When you send the subscription, the user gets a Push notification from Safaricom.</p>
+   </div>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>New Subscription</h3>
+      </div>
+<%= render 'form' %>
+
+      </div>
+    </div>
+</div>
+</div>
+
+<div class="row">
+ <div class="col-md-8 center">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>The Code</h3>
+      </div>
+
+  <div class="panel-body">
+  <code> 
+ # Include the helper gateway class in the same directory<br/>
+  require_relative 'AfricasTalkingGateway'<br/>
+<br/>
+  # Specify your login credentials<br/>
+  username = "yes"<br/>
+  apikey   = "happyfeet83b8649c7d3884ad0679b827c7393140bc68b85e0e5b0a31dcb68"<br/>
+<br/>
+  #Specify the number that you want to subscribe<br/>
+  #Please ensure you include the country code (+254 for Kenya in this case)<br/>
+  no   = params.require(:subscribe).permit(:number)<br/>
+  phoneNumber = no[:number]<br/>
+<br/>
+  #Specify your Africa's Talking short code and keyword<br/>
+  shortCode = "22384";<br/>
+  keyword   = "sheng";<br/>
+<br/>
+  # Create a new instance of our awesome gateway class<br/>
+  gateway = AfricasTalkingGateway.new(username, apikey)<br/>
+<br/>
+  # Any gateway error will be captured by our custom Exception class below,<br/>
+  # so wrap the call in a try-catch block<br/>
+  begin<br/>
+    results = gateway.createSubscription(phoneNumber, shortCode, keyword)<br/>
+      results.each {|result|<br/>
+       @subscribe = Subscribe.new(number: params[:phoneNumber],<br/> shortcode: params[:shortCode], keyword: params[:keyword], updatetype: params[:updateType])<br/>
+
+      }<br/>
+ 
+     respond_to do |format|<br/>
+         if @subscribe.save<br/>
+           format.html { redirect_to @subscribe, notice: 'Subscribe was successfully created.' }<br/>
+           format.json { render :show, status: :created, location: @subscribe }<br/>
+         else<br/>
+           format.html { render :new }<br/>
+           format.json { render json: @subscribe.errors, status: :unprocessable_entity }<br/>
+         end<br/>
+     end<br/>
+  rescue AfricasTalkingGatewayException => ex<br/>
+  puts 'Encountered an error: ' + ex.message<br/>
+  end<br/>
+  end<br/>
+
+
+</code>
+  </div>
+
+  </div>
+ </div>
+</div>
+

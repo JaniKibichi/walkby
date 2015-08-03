@@ -1,0 +1,50 @@
+<div class="panel-body">
+<%= form_for(@bulk, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @bulk.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bulk.errors.count, "error") %> prohibited this bulk from being saved:</h2>
+
+      <ul>
+      <% @bulk.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= f.label :number, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :number,class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :message, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :message,class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :Username, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :username,class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :APIKey, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_area :apikey,class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    <%= f.submit "Send SMS" %>
+    <%= link_to 'Back', bulks_path, class: 'btn btn-success' %>
+   </div>
+  </div>
+<% end %>
+</div>

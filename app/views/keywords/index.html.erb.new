@@ -1,0 +1,36 @@
+
+<h1>See the Keyword you sent.</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Text</th>
+      <th>Date</th>
+      <th>Smsid</th>
+      <th>Linkid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @keywords.each do |keyword| %>
+      <tr>
+        <td><%= keyword.from %></td>
+        <td><%= keyword.to %></td>
+        <td><%= keyword.text %></td>
+        <td><%= keyword.date %></td>
+        <td><%= keyword.smsId %></td>
+        <td><%= keyword.linkId %></td>
+        <td><%= link_to 'Show', keyword %></td>
+        <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
+        <td><%= link_to 'Destroy', keyword, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Keyword', new_keyword_path %>

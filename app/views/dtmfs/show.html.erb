@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Isactive:</strong>
+  <%= @dtmf.isActive %>
+</p>
+
+<p>
+  <strong>Sessionid:</strong>
+  <%= @dtmf.sessionId %>
+</p>
+
+<p>
+  <strong>Direction:</strong>
+  <%= @dtmf.direction %>
+</p>
+
+<p>
+  <strong>Callernumber:</strong>
+  <%= @dtmf.callerNumber %>
+</p>
+
+<p>
+  <strong>Destinationnumber:</strong>
+  <%= @dtmf.destinationNumber %>
+</p>
+
+<p>
+  <strong>Dtmfdigits:</strong>
+  <%= @dtmf.dtmfDigits %>
+</p>
+
+<p>
+  <strong>Recordingurl:</strong>
+  <%= @dtmf.recordingUrl %>
+</p>
+
+<p>
+  <strong>Durationinseconds:</strong>
+  <%= @dtmf.durationInSeconds %>
+</p>
+
+<p>
+  <strong>Currencycode:</strong>
+  <%= @dtmf.currencyCode %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @dtmf.amount %>
+</p>
+
+<%= link_to 'Edit', edit_dtmf_path(@dtmf) %> |
+<%= link_to 'Back', dtmfs_path %>

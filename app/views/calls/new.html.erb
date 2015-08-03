@@ -1,0 +1,96 @@
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Calling Out</h3>
+      </div>
+
+ <div class="panel-body">
+  <h4>Fill the fields:</h4>
+   <div>
+   <a href="https://account.africastalking.com/settings/addphone">Number to Call: </a>Place the number of the phoen you want to call<br/>
+   <br/>
+<a href="https://account.africastalking.com/voice/request">Caller ID(Get a No): </a>The Number that appears as to the receiver.  </br>
+<br/>
+Username: Your username on the API<br/>
+<br/>
+<a href="https://account.africastalking.com/settings/apikey">APIKey: </a>Use an API Key you Generate for your account.<br/>
+<hr/>
+<p> For a call to be processed you need some credits. To send out calls using the free credits, <a href="https://account.africastalking.com/settings/addphone">VERIFY</a> your number.</p>
+   </div>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Send out a Call</h3>
+      </div>
+<%= render 'form' %>
+      </div>
+    </div>
+</div>
+
+</div>
+
+<div class="row">
+ <div class="col-md-8 center">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>The Code</h3>
+      </div>
+
+  <div class="panel-body">
+  <code>
+    # Include the helper gateway class<br/>
+    require_relative 'AfricasTalkingGateway.rb'<br/>
+<br/>
+<br/>
+    # Specify your login credentials<br/>
+    user = params.require(:call).permit(:username)<br/>
+    username = user['username']<br/>
+<br/>
+    api =params.require(:call).permit(:apikey)<br/>
+    apikey = api['apikey']<br/>
+<br/>
+<br/>
+    # Specify your Africa's Talking phone number in international format<br/>
+    caller = "+254711082300"<br/>
+<br/>
+    # Please ensure you include the country code (+254 for Kenya in this case)<br/>
+    to      = params.require(:call).permit(:destinationNumber)<br/>
+    tof     = to['destinationNumber']<br/>
+<br/>
+<br/>
+    # Create a new instance of our awesome gateway class<br/>
+    gateway  = AfricasTalkingGateway.new(username, apikey)<br/>
+    # Any gateway errors will be captured by our custom Exception class below,<br/>
+    # so wrap the call in a try-catch block<br/>
+    begin<br/>
+      # Make the call<br/>
+      reports = gateway.call(caller, tof)<br/>
+      puts reports<br/>
+      puts "Calls have been initiated. Time for song and dance!\n";<br/>
+      # Our API will now contact your callback URL once recipient answers the call!<br/> 
+      #Receive Ingoing Calls <br/>
+      #First read in a couple of POST variables passed in with the request  <br/>
+      @call = Call.new(amount: params[:amount], callerNumber: params[:callerNumber],<br/> destinationNumber: params[:destinationNumber])<br/>
+      respond_to do |format|<br/>
+        if @call.save<br/>
+          format.html { redirect_to @call, notice: 'Call successfully initiated.' }<br/>
+          format.json { render :show, status: :created, location: @call }<br/>
+        else<br/>
+          format.html { render :new }<br/>
+          format.json { render json: @call.errors, status: :unprocessable_entity }<br/>
+        end<br/>
+      end<br/>
+    rescue AfricasTalkingGatewayException => ex<br/>
+      puts 'Encountered an error: ' + ex.message<br/>
+    end<br/>
+  </code>
+  </div>
+  </div>
+ </div>
+</div>

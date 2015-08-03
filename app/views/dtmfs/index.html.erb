@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+      <div class="panel-heading">
+   <h3>List of Incoming Calls</h3>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Isactive</th>
+      <th>Sessionid</th>
+      <th>Direction</th>
+      <th>Callernumber</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dtmfs.each do |dtmf| %>
+      <tr>
+        <td><%= dtmf.isActive %></td>
+        <td><%= dtmf.sessionId %></td>
+        <td><%= dtmf.direction %></td>
+        <td><%= dtmf.callerNumber %></td>
+        <td><%= link_to 'Show', dtmf %></td>
+        <td><%= link_to 'Destroy', dtmf, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dtmf', new_dtmf_path %>

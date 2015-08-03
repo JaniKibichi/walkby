@@ -1,0 +1,58 @@
+<div class="panel-body">
+<%= form_for(@subscribe, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @subscribe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subscribe.errors.count, "error") %> prohibited this subscribe from being saved:</h2>
+
+      <ul>
+      <% @subscribe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group" >
+    <%= f.label :number, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :number, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="field form-group">
+    <%= f.label :shortcode, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :shortcode, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :keyword, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :keyword, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="field form-group">
+    <%= f.label :Username, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_field :username, class: 'form-control' %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :APIKey, class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+    <%= f.text_area :apikey, class: 'form-control' %>
+    </div>
+  </div>
+
+
+  <div class="actions form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    <%= f.submit "Subscribe" %>
+    <%= link_to 'Back', subscribes_path, class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>
+</div>
+
+

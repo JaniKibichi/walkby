@@ -1,0 +1,114 @@
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Send Airtime</h3>
+      </div>
+
+ <div class="panel-body">
+  <h4>Fill the fields:</h4>
+   <div>
+   <a href="https://account.africastalking.com/airtime/transactions">Number: </a>The receiver (verify your number for free credits)<br/>
+   <br/>
+<a href="https://account.africastalking.com/airtime/transactions">Amount: </a>The Airtime Amount you are sending </br>
+<br/>
+Username: Your username on the API<br/>
+<br/>
+<a href="https://account.africastalking.com/settings/apikey">APIKey: </a>Use an API Key you Generate for your account.<br/>
+<hr/>
+<p> To send using the free credits, <a href="https://account.africastalking.com/settings/addphone">VERIFY</a> your number.</p>
+   </div>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Airtime</h3>
+      </div>
+<%= render 'form' %>
+
+      </div>
+    </div>
+</div>
+</div>
+<div class="row">
+ <div class="col-md-8 center">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>The Code</h3>
+      </div>
+
+  <div class="panel-body">
+  <code>
+ # Include the helper gateway class </br>
+   require_relative 'Africas1TalkingGateway'</br>
+</br>
+    # Specify your login credentials</br>
+    user = params.require(:bulk).permit(:username)</br>
+    username = user['username']</br>
+</br>
+    api =params.require(:bulk).permit(:apikey)</br>
+    apikey = api['apikey']</br>
+</br>
+   #Create an array to hold all the recipients</br>
+   recipients = Array.new</br>
+</br>
+   #Grab the list of phone numbers and amount</br>
+       rcvs     = params.require(:airtime).permit(:phoneNumber)</br>
+       cev = rcvs['phoneNumber']</br>
+</br>
+       amount  = params.require(:airtime).permit(:amount)</br>
+       amt = amount['amount']</br>
+</br>
+   #Split the list of phone numbers</br>
+       if cev.length > 13</br>
+        #Separate at the commas</br>
+         cevs=cev.split(",")</br>
+        #Assemple recipients</br>
+         cevs.each do |cevr|</br>
+          recipients << {"phoneNumber" => cevr.strip, "amount" => 'KES '+amt}</br>
+         end</br>
+       else</br>
+         recipients << {"phoneNumber" => cev, "amount" => 'KES '+amt}</br>
+       end</br>
+       puts recipients</br>
+</br>
+   # Create a new instance of our awesome gateway class</br>
+   gateway = AfricasTalkingGateway.new(username, apikey)</br>
+</br>
+   # Any gateway errors will be captured by our custom Exception class below,</br>
+   # so wrap the call in a try-catch block</br>
+   begin</br>
+     # Thats it, hit send and we'll take care of the rest.</br>
+     results = gateway.sendAirtime(recipients)</br>
+     results.each {|x|</br>
+        @airtime = Airtime.new(status: x.status, amount: x.amount, </br>phoneNumber: x.phoneNumber, discount: x.discount,</br> requestId: x.requestId)</br>
+        #incase the status is not equal to success, it is important to list the error message</br>
+        puts 'ErrorMessage='+x.errorMessage</br>
+     }</br>
+     respond_to do |format|</br>
+      if @airtime.save</br>
+        format.html { redirect_to @airtime, notice: 'Airtime was successfully created.' }</br>
+        format.json { render :show, status: :created, location: @airtime }</br>
+      else</br>
+        format.html { render :new }</br>
+        format.json { render json: @airtime.errors, status: :unprocessable_entity }</br>
+      end</br>
+     end</br>
+
+   rescue AfricasTalkingGatewayException => ex</br>
+      puts 'Encountered an error: '+ ex.message</br>
+   end</br>
+   # DONE!</br>
+
+</br>
+  </code>
+  </div>
+  </div>
+ </div>
+</div>
+
+

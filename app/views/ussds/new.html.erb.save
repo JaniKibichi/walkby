@@ -1,0 +1,100 @@
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>How to create a Subscription</h3>
+      </div>
+
+ <div class="panel-body">
+  <h4>Change the USSD Menus:</h4>
+   <div class = "well">
+ <p>The USSD MENU *384*303# is on Safaricom.</p>
+<br/>
+<a href="https://account.africastalking.com/ussd/ussdrequest">You can REQUEST a USSD.</a><br/>
+<hr/>
+<p> When you call the USSD *384*303#, you should see the Menu.</p>
+   </div>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Dial</h3>
+      </div>
+      <div class="well">
+         <%= link_to 'Back', ussds_path, class: 'btn btn-success' %><br/>
+      </div>
+
+      </div>
+    </div>
+
+</div>
+</div>
+
+<div class="row">
+ <div class="col-md-8 center">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>The Code</h3>
+      </div>
+
+  <div class="panel-body">
+  <code>
+    #Persist AT API Params<br/>
+    @ussd = Ussd.new(sessionId: params[:sessionId], serviceCode: params[:serviceCode],<br/>
+    phoneNumber: params[:phoneNumber], text: params[:text])<br/>
+    @response = Response.new<br/>
+    if @ussd.save<br/>
+      # redirect_to ussd_path, :notice => "Your post was saved"<br/>
+      # Reads the variables sent via POST from our gateway<br/>
+                sessionId   = @ussd.sessionId<br/>
+                serviceCode = @ussd.serviceCode<br/>
+                phoneNumber = @ussd.phoneNumber<br/>
+                text        = @ussd.text<br/>
+<br/>
+                if ( text == "" )<br/>
+<br/>
+                        # This is the first request. Note how we start the response with CON<br/>
+                        response  = "CON What would you like to do? \n"<br/>
+                        response += "1. is the value of happiness \n"<br/>
+                        response += "2. is the formula of laughing"<br/>
+                        @response.now = response<br/>
+                 elsif ( text == "1" )<br/>
+<br/>
+                        # Your business logic to determine the account number goes here<br/>
+                        accountNumber  = "ACC1001"<br/>
+                        # This is a terminal request. Note how we start the response with END<br/>
+                        response = "END Your account number is accountNumber"<br/>
+                        @response.now = response<br/>
+<br/>
+                 elsif ( text == "2" )<br/>
+<br/>
+                        # Your business logic to determine the balance goes here<br/>
+                        balance  = "KES 1,000"<br/>
+                        # This is a terminal request. Note how we start the response with END<br/>
+                        response = "END Your balance is balance"<br/>
+                        @response.now = response<br/>
+                end<br/>
+               # Print the response onto the page so that our gateway can read it<br/>
+                #header('Content-type: text/plain');<br/>
+                render plain: @response.now<br/>
+                puts "Content-Type: text/plain"<br/>
+                puts @response.now<br/>
+<br/>
+                # DONE!!!<br/>
+        else<br/>
+         render "new"<br/>
+    end<br/>
+<br/>
+  </code>
+  </div>
+
+  </div>
+ </div>
+</div>
+
+
+

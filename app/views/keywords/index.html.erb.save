@@ -1,0 +1,90 @@
+
+<div class="row">
+<div class="col-md-6 pull-left">
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>How to Send KeyWord SMS</h3>
+      </div>
+
+ <div class="panel-body">
+   Use Ours: Send a message to 20414 STARTING WITH THE KEYWORD TEST then leave a space then MESSAGE.<br/>
+   <br/> 
+   <hr/>
+   <div>
+   <a href="https://account.africastalking.com/sms/keywords">Keyword: </a>Alternatively, Get a Keyword<br/>
+   <br/>
+<a href="https://account.africastalking.com/sms/keywords">Message: </a>Send a Message Starting with the Keyword </br>
+<br/>
+Receive it on your dashboard and/or callBack Url<br/>
+<br/>
+
+<hr/>
+<p> Ensure you have a keyword with us <a href="https://account.africastalking.com/settings/addphone">PLACED HERE!</a></p>
+   </div>
+ </div>
+
+</div>
+</div>
+
+<div class="col-md-6 pull-right">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Keyword Parameters</h3>
+      </div>
+        <div class="panel-body">
+           We send your the following parameters to your callback:<br/>
+<br/><strong>from:</strong> The number that sent the message <br/>
+<br/><strong>to: The number to which the message was sent<br/>
+<br/>text: The message content<br/>
+<br/>date: The date and time when the message was received<br/>
+<br/>id: The internal ID that we use to store this message<br/>
+<br/>linkId: for responses to on-demand user requests with a premium message<br/>
+        </div>
+      </div>
+    </div>
+
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+<div class="panel panel-default">
+      <div class="panel-heading">
+       <h3>Here's the Keyword you sent.</h3>
+      </div>
+<div class="panel-body">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Text</th>
+      <th>Date</th>
+      <th>Smsid</th>
+      <th>Linkid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @keywords.each do |keyword| %>
+      <tr>
+        <td><%= keyword.from %></td>
+        <td><%= keyword.to %></td>
+        <td><%= keyword.text %></td>
+        <td><%= keyword.date %></td>
+        <td><%= keyword.smsId %></td>
+        <td><%= keyword.linkId %></td>
+        <td><%= link_to 'Show', keyword %></td>
+        <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
+        <td><%= link_to 'Destroy', keyword, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+

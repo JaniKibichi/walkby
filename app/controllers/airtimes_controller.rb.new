@@ -1,0 +1,130 @@
+class AirtimesController < ApplicationController
+  before_action :set_airtime, only: [:show, :edit, :update, :destroy]
+
+  # GET /airtimes
+  # GET /airtimes.json
+  def index
+    @airtimes = Airtime.all
+  end
+
+  # GET /airtimes/1
+  # GET /airtimes/1.json
+  def show
+  end
+
+  # GET /airtimes/new
+  def new
+    @airtime = Airtime.new
+  end
+
+  # GET /airtimes/1/edit
+  def edit
+  end
+
+  # POST /airtimes
+  # POST /airtimes.json
+  def create
+   require 'json'
+   # Include the helper gateway class
+   require_relative 'AfricasTalkingGateway'
+
+   # Specify your login credentials
+   username = "jani"
+   apikey   = "680fdfa9eae83b8649c7d3884ad0679b827c7393140bc68b85e0e5b0a31dcb68"
+
+   #Create an array to hold all the recipients
+   recipients = Array.new
+
+   #Grab the list of phone numbers and amount
+       rcvs     = params.require(:airtime).permit(:phoneNumber)
+       puts rcvs
+       puts rcvs['phoneNumber']
+       cev = rcvs['phoneNumber']
+
+       amount  = params.require(:airtime).permit(:amount)
+       puts amount
+       puts amount['amount']
+       amt = amount['amount']
+       puts 'KES '+amt
+   #Split the list of phone numbers
+       if cev.length > 10
+         cevs = cev.split(",")
+         puts cevs
+   #Add the recipients
+         cevs.each do |cevr|
+          recipients = {"phoneNumber" => cevr, "amount" =>  'KES '+amt}
+         end
+       else
+         recipients = cev
+       end 
+       puts recipients
+   #Another reciepient
+   #recipients[1] = {"phoneNumber" => "+254733YYYZZZ", "amount" => "KES YY"}
+
+   # Create a new instance of our awesome gateway class
+   gateway = AfricasTalkingGateway.new(username, apikey)
+
+   # Any gateway errors will be captured by our custom Exception class below,
+   # so wrap the call in a try-catch block
+   begin
+     # Thats it, hit send and we'll take care of the rest.
+     results = gateway.sendAirtime(recipients)
+       results.each {|x|
+         # Note that only the Status "Success" means the airtime was sent
+         # puts 'number=' + x.phoneNumber + '; status=' + x.status + '; requestId=' + x.requestId + '; amount=' + x.amount + "; discount=" + x.discount
+         @airtime = Airtime.new(status: x.status, amount: x.amount, phoneNumber: x.phoneNumber, discount: x.discount, requestId: x.requestId)
+        	#incase the status is not equal to success, it is important to list the error message
+     	puts 'ErrorMessage='+x.errorMessage
+     }
+      respond_to do |format|
+        if @airtime.save
+          format.html { redirect_to @airtime, notice: 'Airtime was successfully created.' }
+          format.json { render :show, status: :created, location: @airtime }
+        else
+          format.html { render :new }
+          format.json { render json: @airtime.errors, status: :unprocessable_entity }
+        end
+      end
+        
+
+   rescue AfricasTalkingGatewayException => ex
+      puts 'Encountered an error: ' + ex.message
+   end
+   # DONE!
+  end
+
+  # PATCH/PUT /airtimes/1
+  # PATCH/PUT /airtimes/1.json
+  def update
+    respond_to do |format|
+      if @airtime.update(airtime_params)
+        format.html { redirect_to @airtime, notice: 'Airtime was successfully updated.' }
+        format.json { render :show, status: :ok, location: @airtime }
+      else
+        format.html { render :edit }
+        format.json { render json: @airtime.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /airtimes/1
+  # DELETE /airtimes/1.json
+  def destroy
+    @airtime.destroy
+    respond_to do |format|
+      format.html { redirect_to airtimes_url, notice: 'Airtime was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_airtime
+      @airtime = Airtime.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def airtime_params
+      params.require(:airtime).permit(:status, :amount, :phoneNumber, :discount, :requestId)
+    end
+end

@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>List of Calls</h3>
+      </div>
+<div class="panel-body">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Direction</th>
+      <th>Callernumber</th>
+      <th>Destinationnumber</th>
+      <th>Amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @calls.each do |call| %>
+      <tr>
+        <td><%= call.direction %></td>
+        <td><%= call.callerNumber %></td>
+        <td><%= call.destinationNumber %></td>
+        <td><%= call.currencyCode %></td>
+        <td><%= call.amount %></td>
+        <td><%= link_to 'Show', call %></td>
+        <td><%= link_to 'Destroy', call, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Call', new_call_path, class: 'btn btn-success' %>
+  </div>
+</div>

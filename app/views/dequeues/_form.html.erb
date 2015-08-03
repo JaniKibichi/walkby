@@ -1,0 +1,65 @@
+<%= form_for(@dequeue) do |f| %>
+  <% if @dequeue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dequeue.errors.count, "error") %> prohibited this dequeue from being saved:</h2>
+
+      <ul>
+      <% @dequeue.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :isActive %><br>
+    <%= f.number_field :isActive %>
+  </div>
+  <div class="field">
+    <%= f.label :sessionId %><br>
+    <%= f.text_field :sessionId %>
+  </div>
+  <div class="field">
+    <%= f.label :direction %><br>
+    <%= f.text_field :direction %>
+  </div>
+  <div class="field">
+    <%= f.label :callerNumber %><br>
+    <%= f.text_field :callerNumber %>
+  </div>
+  <div class="field">
+    <%= f.label :destinationNumber %><br>
+    <%= f.text_field :destinationNumber %>
+  </div>
+  <div class="field">
+    <%= f.label :dtmfDigits %><br>
+    <%= f.text_field :dtmfDigits %>
+  </div>
+  <div class="field">
+    <%= f.label :recordingUrl %><br>
+    <%= f.text_field :recordingUrl %>
+  </div>
+  <div class="field">
+    <%= f.label :durationInSeconds %><br>
+    <%= f.text_field :durationInSeconds %>
+  </div>
+  <div class="field">
+    <%= f.label :currencyCode %><br>
+    <%= f.text_field :currencyCode %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.datetime_select :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :username %><br>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :apikey %><br>
+    <%= f.text_field :apikey %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
